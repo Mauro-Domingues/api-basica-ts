@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 });
 
 let pessoas = [
-    {"id": "0", "nome": "joao0"},
+    {"id": 0, "nome": "joao0"},
 ];
 
 app.get('/pessoas', (req, res) => {
@@ -24,7 +24,7 @@ app.get('/pessoas', (req, res) => {
 app.get('/pessoas/:id', (req, res) => {
     const pessoaId = req.params.id;
     const pessoa = pessoas.find(pessoa => {
-        return (pessoa.id === pessoaId);
+        return (pessoa.id === Number(pessoaId));
     });
     return res.status(200).send(pessoa);
 });
@@ -40,7 +40,7 @@ app.put('/pessoas/:id', (req, res) => {
     const pessoaAtt = req.body;
 
     pessoas = pessoas.map(pessoa => {
-        if (pessoaId === pessoa.id) {
+        if (pessoa.id === Number(pessoaId)) {
             pessoa.nome = pessoaAtt.nome;
         }
         return pessoa;
@@ -50,6 +50,6 @@ app.put('/pessoas/:id', (req, res) => {
 
 app.delete('/pessoas/:id', (req, res) => {
     const pessoaId = req.params.id;
-    pessoas = pessoas.filter((pessoa) => pessoa.id !== pessoaId);
+    pessoas = pessoas.filter((pessoa) => pessoa.id !== Number(pessoaId));
     return res.status(204).send({message: "Usuário excluído"});
 });
